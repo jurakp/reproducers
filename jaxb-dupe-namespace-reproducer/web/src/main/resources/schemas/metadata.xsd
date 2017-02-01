@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:se:customs:datamodel:WCO:DocumentMetaData:1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" targetNamespace="urn:se:customs:datamodel:WCO:DocumentMetaData:1"
+	xmlns:re="urn:se:customs:datamodel:WCO:Response_DS:1">
+	<xs:import namespace="urn:se:customs:datamodel:WCO:Response_DS:1"
+		schemaLocation="response.xsd" />
+	<xs:element name="MetaData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="WCODataModelVersionCode" type="xs:string"></xs:element>
+				<xs:element name="ResponsibleCountryCode" type="xs:string"></xs:element>
+				<xs:element name="ResponsibleAgencyName" type="xs:string"></xs:element>
+				<xs:element name="AgencyAssignedCustomizationCode" type="xs:string"></xs:element>
+				<xs:element name="AgencyAssignedCustomizationVersionCode"
+					type="xs:int"></xs:element>
+				<xs:element name="FunctionalDefinition" type="xs:string"></xs:element>
+				<xs:element name="Response">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Function" type="xs:int"></xs:element>
+							<xs:element name="IssueDateTime">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="re:DateTime"></xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="TypeCode" type="xs:string"></xs:element>
+							<xs:element name="Status">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="EffectiveDateTime">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="re:DateTime"></xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="NameCode" type="xs:string"></xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

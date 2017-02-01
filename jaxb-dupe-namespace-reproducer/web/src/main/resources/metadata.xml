@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="urn:se:customs:datamodel:WCO:DocumentMetaData:1">
+    <WCODataModelVersionCode>3.6-SE</WCODataModelVersionCode>
+    <ResponsibleCountryCode>SE</ResponsibleCountryCode>
+    <ResponsibleAgencyName>Swedish Customs</ResponsibleAgencyName>
+    <AgencyAssignedCustomizationCode>CWHOP</AgencyAssignedCustomizationCode>
+    <AgencyAssignedCustomizationVersionCode>1</AgencyAssignedCustomizationVersionCode>
+    <FunctionalDefinition>TLKVT</FunctionalDefinition>
+    <Response xmlns="urn:se:customs:datamodel:WCO:Response:1" xmlns:ns2="urn:se:customs:datamodel:WCO:Response_DS:1">
+        <Function>8</Function>
+        <IssueDateTime>
+            <ns2:DateTime>2016-10-05T18:40:46Z</ns2:DateTime>
+        </IssueDateTime>
+        <TypeCode>ZTL</TypeCode>
+        <Status>
+            <EffectiveDateTime>
+                <ns2:DateTime>2016-10-05T18:40:46Z</ns2:DateTime>
+            </EffectiveDateTime>
+            <NameCode>TEM</NameCode>
+        </Status>
+    </Response>
+</MetaData>
