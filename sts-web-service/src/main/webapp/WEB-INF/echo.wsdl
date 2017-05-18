@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="sts" targetNamespace="http://www.example.org/sts/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.example.org/sts/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsaws="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+	xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+	xmlns:t="http://docs.oasis-open.org/ws-sx/ws-trust/200512">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.org/sts/">
+			<xsd:element name="Echo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="in" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="EchoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="out" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="EchoRequest">
+		<wsdl:part name="parameters" element="tns:Echo">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="EchoResponse">
+		<wsdl:part name="parameters" element="tns:EchoResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="EchoService">
+		<wsdl:operation name="Echo">
+			<wsdl:input message="tns:EchoRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:EchoResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="EchoServiceBinding" type="tns:EchoService">
+		<wsp:PolicyReference URI="#TransportSAML2BearerPolicy" />
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Echo">
+			<soap:operation soapAction="http://www.example.org/sts/Echo" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="EchoService">
+		<wsdl:port name="EchoServicePort" binding="tns:EchoServiceBinding">
+			<soap:address location="http://localhost:8080/sts-web-service/services/sts" />
+		</wsdl:port>
+	</wsdl:service>
+
+
+	<wsp:Policy wsu:Id="TransportSAML2BearerPolicy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<!-- The wsam:Addressing element, indicates that the endpoints of this 
+					web service MUST conform to the WS-Addressing specification. The attribute 
+					wsp:Optional="false" enforces this assertion. -->
+				<wsam:Addressing wsp:Optional="false">
+					<wsp:Policy />
+				</wsam:Addressing>
+
+				<!-- The sp:SignedSupportingTokens element causes the supporting tokens 
+					to be signed using the primary token that is used to sign the message. -->
+				<sp:SignedSupportingTokens
+					xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<wsp:Policy>
+						<!-- The sp:IssuedToken element asserts that a SAML 2.0 security token 
+							of type Bearer is expected from the STS. The sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"> 
+							attribute instructs the runtime to include the initiator's public key with 
+							every message sent to the recipient. The sp:RequestSecurityTokenTemplate 
+							element directs that all of the children of this element will be copied directly 
+							into the body of the RequestSecurityToken (RST) message that is sent to the 
+							STS when the initiator asks the STS to issue a token. -->
+						<sp:IssuedToken
+							sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+							<sp:RequestSecurityTokenTemplate>
+								<t:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0
+								</t:TokenType>
+								<t:KeyType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Bearer
+								</t:KeyType>
+								<t:Claims Dialect="http://schemas.xmlsoap.org/ws/2005/05/identity"
+						                  xmlns:ic="http://schemas.xmlsoap.org/ws/2005/05/identity">
+						            <ic:ClaimType Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role"/>
+						        </t:Claims>
+							</sp:RequestSecurityTokenTemplate>
+							<wsp:Policy>
+								<sp:RequireInternalReference />
+							</wsp:Policy>
+							<!-- The sp:Issuer element defines the STS's address and endpoint 
+								information This information is used by the STSClient. -->
+							<sp:Issuer>
+								<wsaws:Address>http://localhost:8080/SecurityTokenService/SecurityTokenService</wsaws:Address>
+								<wsaws:Metadata xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance"
+									wsdli:wsdlLocation="http://localhost:8080/SecurityTokenService/SecurityTokenService?wsdl">
+									<wsaw:ServiceName xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+										xmlns:stsns="http://docs.oasis-open.org/ws-sx/ws-trust/200512/"
+										EndpointName="UT_Port">stsns:SecurityTokenService</wsaw:ServiceName>
+								</wsaws:Metadata>
+							</sp:Issuer>
+
+						</sp:IssuedToken>
+					</wsp:Policy>
+				</sp:SignedSupportingTokens>
+				<!-- The sp:Wss11 element declares WSS: SOAP Message Security 1.1 options 
+					to be supported by the STS. These particular elements generally refer to 
+					how keys are referenced within the SOAP envelope. These are normally handled 
+					by CXF. -->
+				<sp:Wss11>
+					<wsp:Policy>
+						<sp:MustSupportRefIssuerSerial />
+						<sp:MustSupportRefThumbprint />
+						<sp:MustSupportRefEncryptedKey />
+					</wsp:Policy>
+				</sp:Wss11>
+				<!-- The sp:Trust13 element declares controls for WS-Trust 1.3 options. 
+					They are policy assertions related to exchanges specifically with client 
+					and server challenges and entropy behaviors. Again these are normally handled 
+					by CXF. -->
+				<sp:Trust13>
+					<wsp:Policy>
+						<sp:MustSupportIssuedTokens />
+						<sp:RequireClientEntropy />
+						<sp:RequireServerEntropy />
+					</wsp:Policy>
+				</sp:Trust13>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+</wsdl:definitions>

@@ -79,9 +79,9 @@ public class STSBearerProvider extends SecurityTokenServiceProvider {
 
         List<ServiceMBean> services = new LinkedList<ServiceMBean>();
         StaticService service = new StaticService();
-        service.setEndpoints(Arrays.asList("http://localhost:(\\d)*/BZ-1352418/EchoService",
-                "http://\\[::1\\]:(\\d)*/BZ-1352418/EchoService",
-                "http://\\[0:0:0:0:0:0:0:1\\]:(\\d)*/BZ-1352418/EchoService"));
+        service.setEndpoints(Arrays.asList("http://localhost:(\\d)*/sts-web-service/EchoService",
+                "http://\\[::1\\]:(\\d)*/sts-web-service/EchoService",
+                "http://\\[0:0:0:0:0:0:0:1\\]:(\\d)*/sts-web-service/EchoService"));
         services.add(service);
 
         TokenIssueOperation issueOperation = new TokenIssueOperation();
