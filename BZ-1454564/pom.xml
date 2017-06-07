@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>jboss</groupId>
+	<artifactId>remoting-jmx-hang-demo</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>eap6-supported-artifacts</artifactId>
+				<version>6.4.5.GA</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency-->
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>jboss-eap-javaee7-with-tools</artifactId>
+				<version>7.0.6.GA</version>
+			</dependency>
+			<!-- dependency>
+			    <groupId>org.wildfly.bom</groupId>
+			    <artifactId>wildfly-javaee7-with-tools</artifactId>
+			    <version>11.0.0.Alpha1</version>
+			</dependency-->
+
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- >dependency>
+			<groupId>org.jboss.remotingjmx</groupId>
+			<artifactId>remoting-jmx</artifactId>
+			<scope>runtime</scope>
+		</dependency-->
+
+		<dependency>
+			<groupId>org.jboss.remoting</groupId>
+			<artifactId>jboss-remoting</artifactId>
+			<version>4.0.23.Final-SNAPSHOT</version>			
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.remotingjmx</groupId>
+			<artifactId>remoting-jmx</artifactId>
+			<version>2.0.1.Final-redhat-1</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.3.1.Final-redhat-1</version>
+        </dependency>
+        
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${version.exec-maven-plugin}</version>
+				<configuration>
+					<mainClass>jboss.remoting_jmx.App</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
