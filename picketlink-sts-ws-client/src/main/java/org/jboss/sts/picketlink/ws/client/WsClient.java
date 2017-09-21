@@ -57,6 +57,7 @@ public class WsClient {
 
         BindingProvider bp = (BindingProvider) port;
         //ClientConfigUtil.setConfigHandlers(bp, "META-INF/standard-jaxws-client-config.xml", "SAML WSSecurity Client");
+        // prepare binding
         bp.getRequestContext().put(SAML2Constants.SAML2_ASSERTION_PROPERTY, assertion);
         List<Handler> handlers = bp.getBinding().getHandlerChain();
         handlers.add(new org.picketlink.trust.jbossws.handler.SAML2Handler());
