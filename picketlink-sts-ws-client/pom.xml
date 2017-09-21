@@ -107,11 +107,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.jboss.sts.picketlink</groupId>
-            <artifactId>picketlink-sts-ws</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>            
         </dependency>

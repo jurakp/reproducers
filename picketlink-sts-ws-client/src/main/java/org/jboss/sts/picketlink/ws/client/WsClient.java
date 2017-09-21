@@ -2,12 +2,15 @@ package org.jboss.sts.picketlink.ws.client;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.w3c.dom.Element;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.MessageContext;
 
 import org.jboss.sts.picketlink.ws.EchoServiceRemote;
 import org.jboss.ws.api.configuration.ClientConfigUtil;
@@ -53,9 +56,11 @@ public class WsClient {
                 EchoServiceRemote.class);
 
         BindingProvider bp = (BindingProvider) port;
-        ClientConfigUtil.setConfigHandlers(bp, "META-INF/standard-jaxws-client-config.xml", "SAML WSSecurity Client");
+        //ClientConfigUtil.setConfigHandlers(bp, "META-INF/standard-jaxws-client-config.xml", "SAML WSSecurity Client");
         bp.getRequestContext().put(SAML2Constants.SAML2_ASSERTION_PROPERTY, assertion);
-        
+        List<Handler> handlers = bp.getBinding().getHandlerChain();
+        handlers.add(new org.picketlink.trust.jbossws.handler.SAML2Handler());
+        bp.getBinding().setHandlerChain(handlers);
         port.echo("Test");
         System.out.println("Check the server output log.");
 
