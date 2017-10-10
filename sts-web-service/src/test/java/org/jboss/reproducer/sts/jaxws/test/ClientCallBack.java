@@ -44,6 +44,7 @@ public class ClientCallBack implements CallbackHandler {
     @Override
     public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         for (int i = 0; i < callbacks.length; i++) {
+            System.out.println("ClientCallback " + callbacks[i]);
             if (callbacks[i] instanceof WSPasswordCallback) {
                 WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
                 if ("myclientkey".equals(pc.getIdentifier())) {

@@ -19,7 +19,7 @@
 
   <!-- A time/date based rolling appender -->
   <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
-    <param name="File" value="${jboss.server.home.dir}/echo-service.log"/>
+    <param name="File" value="../standalone/log/echo-service.log"/>
     <param name="MaxFileSize" value="10MB"/>
     <param name="Append" value="true"/>
 

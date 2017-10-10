@@ -72,7 +72,7 @@ public class StsTest {
                 .addAsWebInfResource(new File(WEBAPP_SRC, "WEB-INF/beans.xml"))
                 .addAsWebInfResource(new File(WEBAPP_SRC, "WEB-INF/jboss-web.xml"))
                 .setWebXML(new File(WEBAPP_SRC, "WEB-INF/web.xml"))
-                .setManifest(new StringAsset("Dependencies: org.jboss.ws.cxf.jbossws-cxf-client, org.apache.cxf.impl, org.opensaml"));
+                .setManifest(new StringAsset("Dependencies: org.jboss.ws.cxf.jbossws-cxf-client, org.jboss.ws.cxf.jbossws-cxf-server, org.apache.cxf.impl, org.opensaml"));
         war.as(ZipExporter.class).exportTo(new File("target/shrink.war"), true);
         return war;
     }
@@ -85,6 +85,7 @@ public class StsTest {
             // WSDL_PATH)).getEchoServicePort();
             Map<String, Object> ctx = ((BindingProvider) service).getRequestContext();
             // set the security related configuration information for the service "request"
+            ctx.put(SecurityConstants.USERNAME, "alice");
             ctx.put(SecurityConstants.CALLBACK_HANDLER, new ClientCallBack());
             ctx.put(SecurityConstants.SIGNATURE_PROPERTIES,
                     Thread.currentThread().getContextClassLoader().getResource("clientKeystore.properties"));

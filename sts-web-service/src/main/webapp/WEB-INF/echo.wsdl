@@ -72,6 +72,17 @@
 					<wsp:Policy />
 				</wsam:Addressing>
 
+				<sp:SupportingTokens>
+					<wsp:Policy>
+						<sp:UsernameToken
+							sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+							<wsp:Policy>
+								<sp:WssUsernameToken10 />
+							</wsp:Policy>
+						</sp:UsernameToken>
+					</wsp:Policy>
+				</sp:SupportingTokens>
+
 				<!-- The sp:SignedSupportingTokens element causes the supporting tokens 
 					to be signed using the primary token that is used to sign the message. -->
 				<sp:SignedSupportingTokens
@@ -92,9 +103,10 @@
 								<t:KeyType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Bearer
 								</t:KeyType>
 								<t:Claims Dialect="http://schemas.xmlsoap.org/ws/2005/05/identity"
-						                  xmlns:ic="http://schemas.xmlsoap.org/ws/2005/05/identity">
-						            <ic:ClaimType Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role"/>
-						        </t:Claims>
+									xmlns:ic="http://schemas.xmlsoap.org/ws/2005/05/identity">
+									<ic:ClaimType
+										Uri="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role" />
+								</t:Claims>
 							</sp:RequestSecurityTokenTemplate>
 							<wsp:Policy>
 								<sp:RequireInternalReference />

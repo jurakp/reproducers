@@ -6,4 +6,5 @@
     http://www.jboss.org/schema/jbossas/jboss-web_7_2.xsd">
 
 	<security-domain>java:/jaas/JBossWS-trust-sts</security-domain>
+	<use-jboss-authorization>true</use-jboss-authorization>
 </jboss-web>

@@ -33,6 +33,10 @@ import org.jboss.wsf.stack.cxf.extensions.security.PasswordCallbackHandler;
  */
 public class ServerPasswordCallbackHandler extends PasswordCallbackHandler {
 
+    public ServerPasswordCallbackHandler() {
+        super(getInitMap());
+    }
+
     public ServerPasswordCallbackHandler(Map<String, String> initMap) {
         super(getInitMap());
     }
@@ -41,6 +45,8 @@ public class ServerPasswordCallbackHandler extends PasswordCallbackHandler {
         Map<String, String> passwords = new HashMap<String, String>();
         passwords.put("myservicekey", "skpass");
         System.out.println("Adding password for myservicekey in the SEI.");
+        passwords.put("alice", "clarinet");
+        System.out.println("Adding password for alice in the SEI.");
         return passwords;
     }
 }
