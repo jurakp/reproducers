@@ -1,0 +1,3 @@
+<jboss-web>
+  <context-root>resteasy-1824</context-root>
+</jboss-web>
