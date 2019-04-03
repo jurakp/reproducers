@@ -11,7 +11,7 @@ import org.jboss.resteasy.plugins.cache.server.ServerCacheFeature;
  * @author pjurak
  *
  */
-//@ApplicationPath("/rest")
+// @ApplicationPath("/rest")
 public class Application extends javax.ws.rs.core.Application
 {
 

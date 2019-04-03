@@ -25,17 +25,13 @@ import javax.ws.rs.core.Context;
 import org.jboss.resteasy.plugins.cache.server.ServerCache;
 
 @Path("/")
-public class HelloWorld {
+public class HelloWorld2 {
    
-   @Context
-   private ServerCache cache;
    
     @GET
-    @Path("/hello")
+    @Path("/hello2")
     @Produces({ "application/json" })
-    public String sayHello(@Context ServerCache ssCache, @QueryParam("name") String name) {
-        System.out.println("Instance cache " + cache);
-        System.out.println("Method cache " + ssCache);
+    public String sayHello2(@QueryParam("name") String name) {
         return "{\"result\":\"Hello " + name + "!\"}";
-    }  
+    }
 }
